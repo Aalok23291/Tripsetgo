@@ -41,6 +41,7 @@ android {
         compose = true
         viewBinding=true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -63,6 +64,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
+    implementation ("com.google.android.material:material:1.9.0")
 
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
