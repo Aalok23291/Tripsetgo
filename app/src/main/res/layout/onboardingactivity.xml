@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".OnboardingActivity">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -12,8 +13,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginEnd="-6dp"
+        android:layout_marginBottom="-2dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/skipButton"
@@ -21,12 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
+        android:layout_margin="19dp"
 
-        android:layout_margin="1dp"
+
+
+        android:layout_marginBottom="40dp"
         android:background="?attr/selectableItemBackground"
         android:backgroundTint="@android:color/transparent"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="sans-serif-condensed"
         android:text="Skip"
         android:textColor="@color/white"
         android:textSize="20sp" />
@@ -37,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="110dp"
+        android:layout_marginLeft="16dp"
+
         app:dotsColor="@color/material_dynamic_neutral95"
         app:dotsStrokeColor="@color/grey" />
 
@@ -53,7 +58,7 @@
 
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="17dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/next"
         android:src="@drawable/ic_arrow_next" />

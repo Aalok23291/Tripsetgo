@@ -63,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:background="@android:color/transparent"
+        android:background="@color/translucent"
         android:backgroundTint="#B1A099"
         app:boxStrokeColor="@color/grey"
         android:text="Sign In"
@@ -88,27 +88,18 @@
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.684" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/gSignInBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="80dp"
-        android:text="Log In with Google"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:background="@android:color/transparent"
-        android:backgroundTint="#80FFFFFF"
-        app:backgroundTint="@color/white"
-        app:icon="@drawable/googlelogo"
-        app:iconGravity="start"
-        app:iconPadding="4dp"
-        app:iconSize="20dp"
-        app:iconTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="336dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.984" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
