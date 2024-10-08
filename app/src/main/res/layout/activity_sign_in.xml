@@ -28,7 +28,6 @@
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:hint="Type your Email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -94,6 +93,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:text="Sign in with Google"
 
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"

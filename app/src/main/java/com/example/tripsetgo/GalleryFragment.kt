@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tripsetgo.R
 
-class SearchFragment : Fragment() {
+class GalleryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 }

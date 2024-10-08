@@ -1,0 +1,107 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/aesthetic_background"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/timeCapsuleHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:elevation="4dp"
+        android:shadowColor="@color/grey"
+        android:shadowRadius="5"
+        android:text="CLICKO!"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/capsuleScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/timeCapsuleHeader"
+        android:layout_above="@id/newCapsuleButtonContainer"
+        android:background="@android:color/transparent"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/capsuleListContainer">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capsule 1"
+                android:padding="16dp"
+                android:background="@drawable/capsule_item_background"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:elevation="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capsule 2"
+                android:padding="16dp"
+                android:background="@drawable/capsule_item_background"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:elevation="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capsule 3"
+                android:padding="16dp"
+                android:background="@drawable/capsule_item_background"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:elevation="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capsule 4"
+                android:padding="16dp"
+                android:background="@drawable/capsule_item_background"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:elevation="6dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/newCapsuleButtonContainer"
+        android:layout_width="395dp"
+        android:layout_height="92dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/newCapsuleButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/fab_background"
+            android:contentDescription="Create New Capsule"
+            android:elevation="12dp"
+            android:padding="16dp"
+            android:src="@android:drawable/stat_sys_upload_done"
+            app:tint="@color/grey" />
+    </RelativeLayout>
+
+</RelativeLayout>

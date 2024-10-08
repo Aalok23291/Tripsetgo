@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">Tripsetgo</string>
+    <string name="app_name">MoneyMingle</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Next</string>
-    <string name="default_web_client_id">927345187650-6msoun51ekkfi1upduhp7elfve15rtob.apps.googleusercontent.com</string></resources>
+    <string name="more_options">More Options</string>
+
+    <string name="default_web_client_id">927345187650-6msoun51ekkfi1upduhp7elfve15rtob.apps.googleusercontent.com</string>
+    <string name="show_qr_code">show qr</string>
+    <string name="add_expense">add expense\n</string>
+    <string name="addexpense">Add Expense</string>
+</resources>

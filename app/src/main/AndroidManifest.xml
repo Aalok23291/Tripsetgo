@@ -2,9 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tripsetgo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logooo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -33,6 +40,13 @@
             android:name=".OnboardingActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".CreateGroupActivity"></activity>
+        <activity android:name=".GroupDetailsActivity"></activity>
+        <activity android:name=".AddExpenseActivity"></activity>
+        <activity android:name=".AddMembersActivity"></activity>
+        <activity android:name=".ExpenseActivity"></activity>
+        <activity android:name=".CreateGroupAndAddMembersActivity"></activity>
+
 
         <meta-data
             android:name="com.google.android.gms.version"
