@@ -1,107 +1,79 @@
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/aesthetic_background"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/timeCapsuleHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:elevation="4dp"
-        android:shadowColor="@color/grey"
-        android:shadowRadius="5"
-        android:text="CLICKO!"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-
-    <ScrollView
-        android:id="@+id/capsuleScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_below="@id/timeCapsuleHeader"
-        android:layout_above="@id/newCapsuleButtonContainer"
-        android:background="@android:color/transparent"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/capsuleListContainer">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Capsule 1"
-                android:padding="16dp"
-                android:background="@drawable/capsule_item_background"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:elevation="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Capsule 2"
-                android:padding="16dp"
-                android:background="@drawable/capsule_item_background"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:elevation="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Capsule 3"
-                android:padding="16dp"
-                android:background="@drawable/capsule_item_background"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:elevation="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Capsule 4"
-                android:padding="16dp"
-                android:background="@drawable/capsule_item_background"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:elevation="6dp" />
-
-        </LinearLayout>
-    </ScrollView>
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/newCapsuleButtonContainer"
-        android:layout_width="395dp"
-        android:layout_height="92dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/newCapsuleButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+        <TextView
+            android:id="@+id/galleryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/fab_background"
-            android:contentDescription="Create New Capsule"
-            android:elevation="12dp"
-            android:padding="16dp"
-            android:src="@android:drawable/stat_sys_upload_done"
-            app:tint="@color/grey" />
+            android:layout_marginTop="16dp"
+            android:text="My Capsules"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/galleryHeader"
+            android:padding="8dp"
+            android:clipToPadding="false"/>
+
+        <!-- Empty State Layout -->
+        <LinearLayout
+            android:id="@+id/emptyStateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/galleryHeader"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/empty_capsule"
+                android:alpha="0.5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="No Capsules Yet"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Create your first capsule by tapping the + button"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
-</RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/plus"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

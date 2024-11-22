@@ -15,7 +15,7 @@ class ExpenseDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_expense_detail) // Make sure to create this layout
+        setContentView(R.layout.activity_expense_detail) // Ensure this layout exists
 
         // Initialize views
         expenseNameTextView = findViewById(R.id.expense_name_text_view)
@@ -26,19 +26,19 @@ class ExpenseDetailActivity : AppCompatActivity() {
         participantsTextView = findViewById(R.id.participants_text_view)
 
         // Get data from Intent
-        val expenseName = intent.getStringExtra("expenseName")
-        val expenseDescription = intent.getStringExtra("expenseDescription")
+        val expenseName = intent.getStringExtra("expenseTitle") ?: "No Title"
+        val expenseDescription = intent.getStringExtra("expenseDescription") ?: "No Description"
         val expenseAmount = intent.getDoubleExtra("expenseAmount", 0.0)
-        val paidBy = intent.getStringExtra("paidBy")
+        val paidBy = intent.getStringExtra("paidBy") ?: "Unknown"
         val split = intent.getBooleanExtra("split", false)
-        val participants = intent.getStringArrayListExtra("participants") ?: ArrayList()
+        val participants = intent.getStringArrayListExtra("participants") ?: arrayListOf()
 
         // Set data to views
         expenseNameTextView.text = expenseName
         expenseDescriptionTextView.text = expenseDescription
-        expenseAmountTextView.text = "$$expenseAmount" // Format as needed
+        expenseAmountTextView.text = String.format("$%.2f", expenseAmount) // Format as needed
         paidByTextView.text = paidBy
         splitTextView.text = if (split) "Yes" else "No"
-        participantsTextView.text = participants.joinToString(", ") // Display participants
+        participantsTextView.text = if (participants.isNotEmpty()) participants.joinToString(", ") else "No Participants" // Display participants or a message if none
     }
 }

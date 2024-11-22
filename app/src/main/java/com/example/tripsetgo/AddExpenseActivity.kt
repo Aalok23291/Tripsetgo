@@ -152,22 +152,17 @@ class AddExpenseActivity : AppCompatActivity() {
         db.collection("expenses")
             .add(expense)
             .addOnSuccessListener { documentReference ->
-                // After adding the expense, start the ExpenseDetailActivity
-                val intent = Intent(this, ExpenseDetailActivity::class.java).apply {
-                    putExtra("expenseId", documentReference.id) // Pass the ID of the added expense
-                    putExtra("expenseName", name)
-                    putExtra("expenseDescription", description)
-                    putExtra("expenseAmount", amount)
-                    putExtra("paidBy", paidBy)
-                    putExtra("split", split)
-                    putStringArrayListExtra("participants", ArrayList(expense.participants))
-                }
-                startActivity(intent) // Start the detail activity
+                // After adding the expense, start the ExpenseListActivity
+                val intent = Intent(this, GroupExpensesActivity::class.java)
+                    intent.putExtra("GROUP_ID", intent.getStringExtra("GROUP_ID")) // Pass the group ID
+
+                startActivity(intent) // Start the list activity
                 finish() // Optionally close this activity
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error adding expense: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 }

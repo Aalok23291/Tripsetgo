@@ -19,231 +19,214 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <!-- Top Section (Hello, Premium, Profile Icon) -->
+        <!-- Home Content Container -->
         <RelativeLayout
-            android:id="@+id/top_section"
+            android:id="@+id/home_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
-            android:padding="16dp">
+            android:layout_above="@id/bottom_navigation">
 
-            <!-- Hello name! -->
-            <TextView
-                android:id="@+id/hello_text"
-                android:layout_width="wrap_content"
+            <!-- Top Section -->
+            <RelativeLayout
+                android:id="@+id/top_section"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="Hello Traveller!"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:padding="16dp">
 
-            <!-- Premium Badge -->
-            <TextView
-                android:id="@+id/premium_badge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/hello_text"
-                android:layout_alignParentStart="true"
-                android:text="Premium Member"
-                android:textColor="@android:color/holo_blue_light"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/hello_text"
+                    android:layout_width="164dp"
+                    android:layout_height="41dp"
+                    android:layout_alignParentStart="true"
+                    android:text="Hello Traveller!"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-            <!-- Profile Icon -->
+                <ImageView
+                    android:id="@+id/profile_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/profile" />
+            </RelativeLayout>
+
+            <!-- Banner Image -->
             <ImageView
-                android:id="@+id/profile_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/profile" />
+                android:id="@+id/imjj"
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_below="@id/top_section"
+                android:background="@drawable/banner"
+                android:orientation="horizontal"
+                android:padding="45dp" />
+
+            <!-- Grid Layout -->
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/imjj"
+                android:layout_marginTop="0dp"
+                android:padding="16dp"
+                app:columnCount="2">
+
+                <!-- Card 1: Itinerary -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#6F532E"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageItinerary"
+                            android:layout_width="115dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/plane" />
+
+                        <TextView
+                            android:id="@+id/textItinerary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="8dp"
+                            android:text="PLANO!"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card 2: Docs -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#48261D"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageDocs"
+                            android:layout_width="115dp"
+                            android:layout_height="116dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/passport" />
+
+                        <TextView
+                            android:id="@+id/textDocs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="8dp"
+                            android:text="STORO!"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card 3: Photos -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#8D4C3E"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imagePhotos"
+                            android:layout_width="115dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/camera" />
+
+                        <TextView
+                            android:id="@+id/textPhotos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="8dp"
+                            android:text="CLICKO!"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card 4: Expenses -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#1E504B"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageExpenses"
+                            android:layout_width="115dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/moneyy" />
+
+                        <TextView
+                            android:id="@+id/textExpenses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="8dp"
+                            android:text="SPENDO!"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.gridlayout.widget.GridLayout>
         </RelativeLayout>
 
-        <!-- Ad Banner -->
-
-
-        <ImageView
-            android:id="@+id/imjj"
-            android:layout_width="match_parent"
-            android:layout_height="123dp"
-            android:background="@drawable/banner"
-            android:orientation="horizontal"
-            android:layout_below="@id/top_section"
-            android:padding="45dp"
-            >
-
-
-        </ImageView>
-
-        <!-- Tabs Section (Recommend, Trending, Newest) -->
-
-        <!-- Search Bar -->
-
-        <!-- GridLayout for Cards -->
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/gridLayout"
-            android:layout_width="match_parent"
-            android:layout_height="531dp"
-            android:layout_above="@id/bottom_navigation"
-            android:layout_below="@id/imjj"
-            android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="55dp"
-            android:padding="16dp"
-            app:columnCount="2">
-
-            <!-- First Card: Itinerary -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_columnWeight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#6F532E"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageItinerary"
-                        android:layout_width="115dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/plane" />
-
-                    <TextView
-                        android:id="@+id/textItinerary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="8dp"
-                        android:text="PLANO!"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Second Card: Docs -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_columnWeight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#48261D"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageDocs"
-                        android:layout_width="115dp"
-                        android:layout_height="116dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/passport" />
-
-                    <TextView
-                        android:id="@+id/textDocs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="8dp"
-                        android:text="STORO!"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Third Card: Photos -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_columnWeight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#8D4C3E"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imagePhotos"
-                        android:layout_width="115dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/camera" />
-
-                    <TextView
-                        android:id="@+id/textPhotos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="8dp"
-                        android:text="CLICKO!"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Fourth Card: Expenses -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_columnWeight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#1E504B"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageExpenses"
-                        android:layout_width="115dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/moneyy" />
-
-                    <TextView
-                        android:id="@+id/textExpenses"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="8dp"
-                        android:text="SPENDO!"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </androidx.gridlayout.widget.GridLayout>
-
+        <!-- Fragment Container -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="802dp"
-            android:layout_above="@id/bottom_navigation"
+            android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
-            android:layout_marginBottom="0dp" />
+            android:layout_above="@id/bottom_navigation"
+            android:visibility="gone" />
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"

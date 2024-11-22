@@ -1,5 +1,6 @@
 package com.example.tripsetgo
 
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -58,15 +59,28 @@ class CreateGroupAndAddMembersActivity : AppCompatActivity() {
             val email = searchInput.text.toString().trim()
             if (isValidEmail(email)) {
                 if (!membersList.contains(email)) {
+                    // Show loading indicator
+                    val progressDialog = ProgressDialog(this).apply {
+                        setMessage("Adding member...")
+                        setCancelable(false)
+                        show()
+                    }
+
                     membersList.add(email)
                     membersAdapter.notifyDataSetChanged()
+
+                    // Hide loading indicator
+                    progressDialog.dismiss();
                 } else {
-                    Toast.makeText(this, "Member already added to the list", Toast.LENGTH_SHORT).show()
+                    showFeedback("Member already added to the list")
                 }
             } else {
-                Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+                showFeedback("Invalid email format")
             }
         }
+
+
+
 
         // Continue button click listener
         continueButton.setOnClickListener {
@@ -74,6 +88,10 @@ class CreateGroupAndAddMembersActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun showFeedback(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
     private fun createGroup() {
         val groupName = groupNameInput.text.toString().trim()
 

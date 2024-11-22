@@ -7,9 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class GroupAdapter(
-    private val groups: List<Group>,
+    private var groups: List<Group>,
     private val itemClick: (Group) -> Unit
 ) : RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
+    private var fullList: List<Group> = groups
 
     // ViewHolder for each group item
     class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,6 +32,18 @@ class GroupAdapter(
 
         // Set click listener for item
         holder.itemView.setOnClickListener { itemClick(group) }
+    }
+    fun updateList(newList: List<Group>) {
+        groups = newList
+        notifyDataSetChanged()
+    }
+    fun filter(query: String) {
+        groups = if (query.isEmpty()) {
+            fullList
+        } else {
+            fullList.filter { it.name.contains(query, ignoreCase = true) } // Adjust based on group properties
+        }
+        notifyDataSetChanged()
     }
 
     // Return the total count of items

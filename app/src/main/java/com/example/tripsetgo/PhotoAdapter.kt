@@ -6,23 +6,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tripsetgo.databinding.ItemPhotoBinding
 
-class PhotoAdapter(private val photos: List<LocationPhoto>) : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+class PhotoAdapter(
+    private val onPhotoClick: (Photo) -> Unit
+) : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
-    class PhotoViewHolder(val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root)
+    private var photos = listOf<Photo>()
+
+    inner class PhotoViewHolder(
+        private val binding: ItemPhotoBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(photo: Photo) {
+            binding.apply {
+                Glide.with(photoImageView)
+                    .load(photo.url)
+                    .centerCrop()
+                    .into(photoImageView)
+
+                root.setOnClickListener { onPhotoClick(photo) }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        val binding = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PhotoViewHolder(binding)
+        return PhotoViewHolder(
+            ItemPhotoBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val photo = photos[position]
-        Glide.with(holder.binding.photoImageView.context)
-            .load(photo.images.large.url)
-            .into(holder.binding.photoImageView)
+        holder.bind(photos[position])
     }
 
-    override fun getItemCount(): Int {
-        return photos.size
+    override fun getItemCount() = photos.size
+
+    fun updatePhotos(newPhotos: List<Photo>) {
+        photos = newPhotos
+        notifyDataSetChanged()
     }
 }

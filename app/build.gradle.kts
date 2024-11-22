@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.games.activity)
+    val nav_version = "2.7.6"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,8 +64,11 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
     implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.androidx.recyclerview)
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.tbuonomo:dotsindicator:5.0")
@@ -83,6 +88,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     implementation("androidx.media3:media3-common-ktx:1.5.0-alpha01") // Updated to latest version
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+    implementation (libs.androidx.navigation.fragment.ktx.v276)
+    implementation (libs.androidx.navigation.ui.ktx.v276)
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

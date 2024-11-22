@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:startColor="#454343"
-    android:endColor="#979395"
+        android:startColor="#7E7D7D"
+    android:endColor="#C3C0C1"
     android:angle="90"/>            <!-- Vertical gradient -->
 </shape>

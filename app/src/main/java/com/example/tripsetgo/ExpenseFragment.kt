@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +46,6 @@ class ExpenseFragment : Fragment() {
         groupsRecyclerView.adapter = groupsAdapter
 
         createGroupButton = view.findViewById(R.id.addGroupButton)
-
         // Set click listener for the create group button
         createGroupButton.setOnClickListener {
             val intent = Intent(activity, CreateGroupAndAddMembersActivity::class.java)
@@ -81,7 +81,32 @@ class ExpenseFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+
+        // Get the search item from the menu and set up SearchView
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
+        searchView.setIconifiedByDefault(false)
+
+        // Retrieve the icon views
+        val searchIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
+        searchIcon.setImageResource(R.drawable.ic_search)  // Custom icon
+        searchIcon.layoutParams.width = 64  // Adjust the width
+        searchIcon.layoutParams.height = 64  // Adjust the height
+        searchIcon.requestLayout()  // Request a layout update
+        // Listen for text input in SearchView
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false // Use onQueryTextChange instead for dynamic filtering
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter the list based on the input text
+                filterGroups(newText.orEmpty())
+                return true
+            }
+        })
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -97,8 +122,13 @@ class ExpenseFragment : Fragment() {
 
     private fun openGroup(group: Group) {
         // Open the ExpenseActivity for the selected group
-        val intent = Intent(activity, ExpenseActivity::class.java)
+        val intent = Intent(activity, GroupExpensesActivity::class.java)
         intent.putExtra("GROUP_ID", group.id)
         startActivity(intent)
     }
+
+    private fun filterGroups(query: String) {
+        groupsAdapter.filter(query)
+    }
+
 }

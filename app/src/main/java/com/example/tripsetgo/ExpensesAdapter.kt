@@ -2,6 +2,7 @@ package com.example.tripsetgo
 
 import Expense
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,8 @@ class ExpensesAdapter(private val expenses: List<Expense>) : RecyclerView.Adapte
         val expense = expenses[position]
         holder.descriptionText.text = expense.description
         holder.amountText.text = String.format("%.2f", expense.amount)
+        Log.d("ExpensesAdapter", "Binding expense: ${expense.description}, Amount: ${expense.amount}")
+
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context

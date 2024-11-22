@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/galleryFragment">
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.tripsetgo.GalleryFragment"
+        android:label="Gallery">
+
+        <action
+            android:id="@+id/action_gallery_to_capsule_content"
+            app:destination="@id/capsuleContentFragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/capsuleContentFragment"
+        android:name="com.example.tripsetgo.CapsuleContentFragment"
+        android:label="Capsule Content">
+
+        <argument
+            android:name="capsuleId"
+            app:argType="string" />
+        <argument
+            android:name="capsuleName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

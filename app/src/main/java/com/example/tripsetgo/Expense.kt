@@ -8,6 +8,7 @@ data class Expense(
     val paidBy: String = "", // New field for who paid the expense
     val shares: List<Double> = listOf(), // List of shares if split
     val title: String = "",
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val groupId: String = ""
 
 )

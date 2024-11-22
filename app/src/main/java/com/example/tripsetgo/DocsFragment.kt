@@ -1,9 +1,11 @@
 package com.example.tripsetgo
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,88 +36,79 @@ class DocsFragment : Fragment() {
     private var imageUri: Uri? = null
     private var selectedFileUri: Uri? = null
 
-    private lateinit var activityResultLauncher: ActivityResultLauncher<String> // Corrected type to String
+    private lateinit var activityResultLauncher: ActivityResultLauncher<String>
     private lateinit var documentName: String
     private lateinit var progressBar: ProgressBar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_docs, container, false)
         progressBar = view.findViewById(R.id.progressBar)
-        // Initialize RecyclerView
+
         recyclerView = view.findViewById(R.id.recyclerViewDocuments)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Initialize FloatingActionButton
         fabUploadDocument = view.findViewById(R.id.fabUploadDocument)
 
-        // Initialize ActivityResultLauncher for getting content (document)
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
-                imageUri = it
-                uploadDocumentToFirebase() // Call your upload function
+                selectedFileUri = it
+                openFileNameDialog() // Prompt for document name after file selection
             }
         }
 
         fabUploadDocument.setOnClickListener { openFileChooser() }
 
-        // Load documents from Firestore
         loadDocuments()
-
 
         return view
     }
 
     private fun openFileChooser() {
-        // Launch the file chooser
-        activityResultLauncher.launch("application/*")
+        activityResultLauncher.launch("application/pdf") // Limiting to PDF file types
+    }
 
+    private fun openFileNameDialog() {
         // Show a dialog to set the document name
         val builder = AlertDialog.Builder(requireContext())
         val input = EditText(requireContext())
         builder.setView(input)
 
         builder.setTitle("Set Document Name")
-        builder.setPositiveButton("OK") { dialog, _ ->
+        builder.setPositiveButton("OK") { _, _ ->
             documentName = input.text.toString() // Capture the document name
-            if (selectedFileUri != null) {
-                uploadFileWithName(selectedFileUri, documentName)
+            if (documentName.isNotBlank() && selectedFileUri != null) {
+                uploadFileWithName(selectedFileUri!!, documentName)
             } else {
-                Toast.makeText(requireContext(), "No file selected!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please provide a valid name and file!", Toast.LENGTH_SHORT).show()
             }
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
-    private fun uploadFileWithName(fileUri: Uri?, documentName: String) {
-        if (fileUri != null) {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-            val storageRef = FirebaseStorage.getInstance().reference.child("documents/$documentName.pdf")
+    private fun uploadFileWithName(fileUri: Uri, documentName: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val storageRef = FirebaseStorage.getInstance().reference.child("documents/$documentName.pdf")
 
-            // Show progress bar during upload
-            progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
 
-            storageRef.putFile(fileUri)
-                .addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        val qrCodeBitmap = generateQRCode(downloadUri.toString())
-                        uploadQRCodeToStorage(qrCodeBitmap, userId, documentName, downloadUri.toString())
-                    }
+        storageRef.putFile(fileUri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    val qrCodeBitmap = generateQRCode(downloadUri.toString())
+                    uploadQRCodeToStorage(qrCodeBitmap, userId, documentName, downloadUri.toString())
                 }
-                .addOnCompleteListener {
-                    progressBar.visibility = View.GONE
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Failed to upload document", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            Toast.makeText(requireContext(), "File URI is null!", Toast.LENGTH_SHORT).show()
-        }
+            }
+            .addOnCompleteListener {
+                progressBar.visibility = View.GONE
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to upload document", Toast.LENGTH_SHORT).show()
+            }
     }
-
-
 
     private fun loadDocuments() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -133,17 +126,33 @@ class DocsFragment : Fragment() {
                         showQRCode(qrCode) // Show QR code when QR button is clicked
                     }, { document ->
                         showMoreOptionsDialog(document) // Show options when more button is clicked
+                    }, { documentUrl ->
+                        openDocument(documentUrl) // Open document when clicked
                     })
                     recyclerView.adapter = documentAdapter
                 }
         }
     }
+    private fun openDocument(url: String) {
+        Log.d("DocsFragment", "Opening document URL: $url")
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.parse(url), "application/pdf") // Ensure the MIME type is correct
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+
+        // Check if there is an app available to open the document
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), "No application available to open this document", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun showMoreOptionsDialog(document: Document) {
         val options = arrayOf("Delete Document")
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("More Options")
-            .setItems(options) { dialog, which ->
+            .setItems(options) { _, which ->
                 if (which == 0) {
                     deleteDocument(document)
                 }
@@ -167,37 +176,15 @@ class DocsFragment : Fragment() {
             }
     }
 
-
-    private fun uploadDocumentToFirebase() {
-        progressBar.visibility = View.VISIBLE
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val fileName = imageUri?.lastPathSegment ?: return
-
-        val storageRef = FirebaseStorage.getInstance().reference.child("documents/$fileName")
-        storageRef.putFile(imageUri!!).addOnSuccessListener { taskSnapshot ->
-            storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                // Generate QR code and upload it to Firebase Storage
-                val qrCodeBitmap = generateQRCode(downloadUri.toString())
-                uploadQRCodeToStorage(qrCodeBitmap, userId, fileName, downloadUri.toString())
-            }
-        }.addOnCompleteListener {
-            progressBar.visibility = View.GONE
-        }
-    }
-
     private fun uploadQRCodeToStorage(qrCodeBitmap: Bitmap, userId: String, fileName: String, documentUrl: String) {
         val qrCodeRef = FirebaseStorage.getInstance().reference.child("qrCodes/$fileName.png")
 
-        // Convert bitmap to byte array
         val byteArrayOutputStream = ByteArrayOutputStream()
         qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val data = byteArrayOutputStream.toByteArray()
 
-        // Upload to Firebase Storage
         qrCodeRef.putBytes(data).addOnSuccessListener {
-            // Retrieve the download URL of the QR code
             qrCodeRef.downloadUrl.addOnSuccessListener { qrCodeUrl ->
-                // Save document information in Firestore, including the QR code URL
                 saveDocumentToFirestore(userId, fileName, documentUrl, qrCodeUrl.toString())
             }.addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to retrieve QR code URL", Toast.LENGTH_SHORT).show()
@@ -207,10 +194,9 @@ class DocsFragment : Fragment() {
         }
     }
 
-
     private fun saveDocumentToFirestore(userId: String, name: String, url: String, qrCode: String) {
         val documentData = hashMapOf(
-            "name" to name,   // Save the document name here
+            "name" to name,
             "url" to url,
             "qrCode" to qrCode
         )
@@ -225,9 +211,6 @@ class DocsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to save document", Toast.LENGTH_SHORT).show()
             }
     }
-
-
-
 
     private fun generateQRCode(text: String): Bitmap {
         val qrCodeWriter = QRCodeWriter()
@@ -251,18 +234,13 @@ class DocsFragment : Fragment() {
     private fun showQRCode(qrCode: String) {
         val qrCodeBitmap = generateQRCode(qrCode)
 
-        if (qrCodeBitmap != null) {
-            val imageView = ImageView(requireContext())
-            imageView.setImageBitmap(qrCodeBitmap)
+        val imageView = ImageView(requireContext())
+        imageView.setImageBitmap(qrCodeBitmap)
 
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setView(imageView)
-            builder.setTitle("QR Code")
-            builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            builder.show()
-        } else {
-            Toast.makeText(requireContext(), "Failed to generate QR Code", Toast.LENGTH_SHORT).show()
-        }
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(imageView)
+        builder.setTitle("QR Code")
+        builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+        builder.show()
     }
-
 }

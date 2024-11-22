@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33FFFFFF">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Gradient background -->
+            <gradient
+                android:angle="45"
+                android:endColor="#FF1976D2"
+                android:startColor="#FF2196F3"
+                android:type="linear" />
+
+            <!-- Rounded corners -->
+            <corners android:radius="24dp" />
+
+            <!-- Optional shadow/elevation effect -->
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
+        </shape>
+    </item>
+</ripple>
